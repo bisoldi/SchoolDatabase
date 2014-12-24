@@ -16,16 +16,13 @@ import java.util.*;
 public class Student extends Person {
 
     //Need itinerary array
-    HashMap<String, Object> personData;
-                
+    private HashMap<String, Object> personData;
+    
     public Student (String firstName, String lastName, String social) {
         super(firstName, lastName, social, PersonEnum.STUDENT);
-        personData = new HashMap<>();
-        setDataMap(personData);
     }
-    
-//    public Student (Scanner fullInfoScanner) {
-//        super(fullInfoScanner, PersonEnum.STUDENT);
-//    }
 
+    public Student (String cLine) {
+        super(cLine, PersonEnum.STUDENT);
+    }    
 }

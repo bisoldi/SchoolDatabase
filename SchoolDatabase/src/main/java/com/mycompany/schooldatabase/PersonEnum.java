@@ -18,27 +18,55 @@ import java.util.*;
  */
 public enum PersonEnum {
     STUDENT ("Student", "S", 7) {
+        
+        @Override
         public Person createPerson(String firstName, String lastName, String social) { 
             return new Student(firstName, lastName, social);
         }
+        
+        @Override
+        public Person createPerson(String cLine) { 
+            return new Student(cLine);
+        }        
     },
     
     FACULTY ("Faculty", "F", 7) {
+        
+        @Override
         public Person createPerson(String firstName, String lastName, String social) {
             return new Faculty(firstName, lastName, social);
         }
+        
+        @Override
+        public Person createPerson(String cLine) {
+            return new Faculty(cLine);
+        }        
     },
     
     ADMINISTRATOR ("Administrator", "A", 7) {
+        
+        @Override
         public Person createPerson(String firstName, String lastName, String social) {
             return new Administrator(firstName, lastName, social);
+        }
+        
+        @Override
+        public Person createPerson(String cLine) {
+            return new Administrator(cLine);
         }
     },
     
     STAFF ("Staff", "ST", 7) {
+        
+        @Override
         public Person createPerson(String firstName, String lastName, String social) {
             return new Staff(firstName, lastName, social);
         }
+        
+        @Override
+        public Person createPerson(String cLine) {
+            return new Staff(cLine);
+        }        
     };
     
     private final String descr;
@@ -46,6 +74,7 @@ public enum PersonEnum {
     private final int idLength;
     
     public abstract Person createPerson(String firstName, String lastName, String social);
+    public abstract Person createPerson(String cLine);
     
     /**
      * Sets the description, prefix and idLength fields

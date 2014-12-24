@@ -14,17 +14,14 @@ import java.util.*;
  */
 public class Faculty extends Person {
     
-    HashMap<String, Object> personData;
+    private HashMap<String, Object> personData;
     
     public Faculty(String firstName, String lastName, String social){
         super(firstName, lastName, social, PersonEnum.FACULTY);
-        personData = new HashMap<>();
-        setDataMap(personData);
     }
-       
     
-//    public Faculty (Scanner fullInfoScanner) {
-//        super(fullInfoScanner, PersonEnum.FACULTY);
-//    }
+    public Faculty(String cLine){
+        super(cLine, PersonEnum.FACULTY);
+    }
     
 }

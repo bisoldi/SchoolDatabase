@@ -29,10 +29,12 @@ public class FileOperations {
             scan = new Scanner(new BufferedReader(new FileReader("names.txt")));
             
             while (scan.hasNextLine()) {
-                String firstName = scan.next();
-                String lastName = scan.next();
-                String social = scan.next();
-                collect.addRandomPerson(firstName, lastName, social);
+//                String firstName = scan.next();
+//                String lastName = scan.next();
+//                String social = scan.next();
+//                collect.addRandomPerson(firstName, lastName, social);
+                
+                collect.addRandomPerson(scan.nextLine());
             }
         } catch (FileNotFoundException fnfe) {
             System.out.println("FileNotFoundException"); 
