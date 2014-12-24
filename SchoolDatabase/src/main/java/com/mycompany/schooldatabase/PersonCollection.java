@@ -20,7 +20,6 @@ public class PersonCollection implements Iterable<Person> {
     private final HashMap<String, Person> hmapID;
     private final HashMap<String, Person> hmapName;
     private final LinkedList<Person> list;
-    private final PersonCollectionIterator iter;
     
     /**
      * Instantiates the two HashMaps being used to hold Person objects
@@ -29,12 +28,14 @@ public class PersonCollection implements Iterable<Person> {
         hmapID = new HashMap<>();
         hmapName = new HashMap<>();
         list = new LinkedList<>();
-        iter = new PersonCollectionIterator(hmapID, hmapName, list);
+        
     }
     
     /**
-     * Creates a randomly selected Person using the information held in the Scanner and adds it to the collection
-     * @param scan The full Person information (first name, last name, social security number)
+     * Creates a randomly selected Person using the information provided and adds it to the collection
+     * @param firstName 
+     * @param lastName
+     * @param social 
      */
     public void addRandomPerson(String firstName, String lastName, String social) {
         PersonEnum type = PersonEnum.ADMINISTRATOR.getRandomType(); //this looks dumb and I expect to get called out on it
@@ -68,49 +69,49 @@ public class PersonCollection implements Iterable<Person> {
      * Instantiates a Student using the information held in the Scanner and adds it to the collection
      * @param scan The full Person information (first name, last name, social security number)
      */
-    private void addStudent(Scanner scan) {
-        Student student = new Student(new Scanner(scan.nextLine()));
-        
-        hmapID.put(student.getIDNumber(), student);
-        hmapName.put(student.getLastName(), student);
-    }
+//    private void addStudent(Scanner scan) {
+//        Student student = new Student(new Scanner(scan.nextLine()));
+//        
+//        hmapID.put(student.getIDNumber(), student);
+//        hmapName.put(student.getLastName(), student);
+//    }
 
     /**
      * Instantiates a Faculty using the information held in the Scanner and adds it to the collection
      * @param scan The full Person information (first name, last name, social security number)
      */
-    private void addFaculty(Scanner scan) {
-        Faculty faculty = new Faculty(new Scanner(scan.nextLine()));
-        
-        hmapID.put(faculty.getIDNumber(), faculty);
-        hmapName.put(faculty.getLastName(), faculty);        
-    }
+//    private void addFaculty(Scanner scan) {
+//        Faculty faculty = new Faculty(new Scanner(scan.nextLine()));
+//        
+//        hmapID.put(faculty.getIDNumber(), faculty);
+//        hmapName.put(faculty.getLastName(), faculty);        
+//    }
     
     /**
      * Instantiates an Administrator using the information held in the Scanner and adds it to the collection
      * @param scan The full Person information (first name, last name, social security number)
      */
-    private void addAdministrator(Scanner scan) {
-        Administrator admin = new Administrator(new Scanner(scan.nextLine()));
-        
-        hmapID.put(admin.getIDNumber(), admin);
-        hmapName.put(admin.getLastName(), admin); 
-    }
+//    private void addAdministrator(Scanner scan) {
+//        Administrator admin = new Administrator(new Scanner(scan.nextLine()));
+//        
+//        hmapID.put(admin.getIDNumber(), admin);
+//        hmapName.put(admin.getLastName(), admin); 
+//    }
     
     /**
      * Instantiates a Staff using the information held in the Scanner and adds it to the collection
      * @param scan The full Person information (first name, last name, social security number)
      */
-    private void addStaff(Scanner scan) {
-        Staff staff = new Staff(new Scanner(scan.nextLine()));
-        
-        hmapID.put(staff.getIDNumber(), staff);
-        hmapName.put(staff.getLastName(), staff); 
-    }
+//    private void addStaff(Scanner scan) {
+//        Staff staff = new Staff(new Scanner(scan.nextLine()));
+//        
+//        hmapID.put(staff.getIDNumber(), staff);
+//        hmapName.put(staff.getLastName(), staff); 
+//    }
     
     @Override
     public PersonCollectionIterator iterator() {
-        return iter;
+        return new PersonCollectionIterator(hmapID, hmapName, list);
     }
 
 }

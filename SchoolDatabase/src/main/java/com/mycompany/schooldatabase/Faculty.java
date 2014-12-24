@@ -13,13 +13,18 @@ import java.util.*;
  * @author Brooks
  */
 public class Faculty extends Person {
-     
+    
+    HashMap<String, Object> personData;
+    
     public Faculty(String firstName, String lastName, String social){
         super(firstName, lastName, social, PersonEnum.FACULTY);
-    }    
-    
-    public Faculty (Scanner fullInfoScanner) {
-        super(fullInfoScanner, PersonEnum.FACULTY);
+        personData = new HashMap<>();
+        setDataMap(personData);
     }
+       
+    
+//    public Faculty (Scanner fullInfoScanner) {
+//        super(fullInfoScanner, PersonEnum.FACULTY);
+//    }
     
 }

@@ -9,6 +9,7 @@ package com.mycompany.schooldatabase;
 import java.io.*;
 import java.util.Scanner;
 import java.util.*;
+import com.google.common.base.Joiner;
 
 /**
  *
@@ -42,4 +43,8 @@ public class FileOperations {
         }
         return collect;
     }
+    
+//    public boolean writeFile(PersonCollection coll) {
+//        
+//    }
 }

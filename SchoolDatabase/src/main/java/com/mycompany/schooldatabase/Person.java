@@ -24,12 +24,13 @@ public class Person {
     private final String email;
     
     private static final Random randomGen = new Random();
+    private HashMap<String, Object> personData;
     
     public Person(String firstName, String lastName, String social, PersonEnum type) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.social = social;
-        this.type = type;
+        this.type = type;        
         idNum = createID();
 
         //initialize fields not passed in
@@ -37,26 +38,30 @@ public class Person {
         email = "";
     }
     
-    /** 
-     * Constructs a new Person that initializes its member fields from the Scanner and PersonEnum.  The entire line is read from the Scanner and 
-     * broken down into tokens using " " (space) as the delimiter and assuming all String objects.
-     * @param scanner the Scanner containing all of the data needed to initialize the Person in order (first name, last name, social security number)
-     * @param type the PersonEnum containing the type of Person this is
-     * 
-     * TODO: Need to do some error checking on the Scanner object and the String that comes out of it
-     */
-    public Person(Scanner scanner, PersonEnum type) {
-        this.firstName = scanner.next();
-        this.lastName = scanner.next();
-        this.social = scanner.next();
-        
-        this.type = type;
-        idNum = createID();
-        
-        //initialize fields not passed in
-        phoneNum = "";
-        email = "";                
+    protected void setDataMap(HashMap<String, Object> personData) {
+        this.personData = personData;
     }
+    
+//    /** 
+//     * Constructs a new Person that initializes its member fields from the Scanner and PersonEnum.  The entire line is read from the Scanner and 
+//     * broken down into tokens using " " (space) as the delimiter and assuming all String objects.
+//     * @param scanner the Scanner containing all of the data needed to initialize the Person in order (first name, last name, social security number)
+//     * @param type the PersonEnum containing the type of Person this is
+//     * 
+//     * TODO: Need to do some error checking on the Scanner object and the String that comes out of it
+//     */
+//    public Person(Scanner scanner, PersonEnum type) {
+//        this.firstName = scanner.next();
+//        this.lastName = scanner.next();
+//        this.social = scanner.next();
+//        
+//        this.type = type;
+//        idNum = createID();
+//        
+//        //initialize fields not passed in
+//        phoneNum = "";
+//        email = "";                
+//    }
         
     private String createID () {
         /*  Author debated whether to have the subclass pass the prefix for the ID# into this method and return the ID#

@@ -15,12 +15,18 @@ import java.util.*;
  */
 public class Staff extends Person {
     
+        HashMap<String, Object> personData;
+    
     public Staff(String firstName, String lastName, String social){
         super(firstName, lastName, social, PersonEnum.STAFF);
+        personData = new HashMap<>();
+        setDataMap(personData);
     }
     
-    public Staff (Scanner fullInfoScanner) {
-        super(fullInfoScanner, PersonEnum.STAFF);
-    }
+    
+    
+//    public Staff (Scanner fullInfoScanner) {
+//        super(fullInfoScanner, PersonEnum.STAFF);
+//    }
 
 }
