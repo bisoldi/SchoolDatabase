@@ -8,6 +8,8 @@ package com.mycompany.schooldatabase;
 
 
 import java.util.*;
+import java.io.*;
+
 
 /**
  *
@@ -24,6 +26,12 @@ public class SchoolUserSystem {
         
         for (Person per : collection) {
             System.out.println(per);
+        }
+        
+        try {
+            fileOps.writeFile(collection);
+        } catch (IOException ioe) {
+            System.out.println("I caught an IOException");
         }
     }
     

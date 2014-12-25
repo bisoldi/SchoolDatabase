@@ -24,7 +24,7 @@ public class Person {
 //    private final String phoneNum;
 //    private final String email;
     
-    private static final Random randomGen = new Random();
+    protected static final Random randomGen = new Random();
     protected HashMap<String, Object> personData = new HashMap<>();
     
     public Person(String firstName, String lastName, String social, PersonEnum type) {
@@ -125,9 +125,13 @@ public class Person {
     public PersonEnum getType() {
         return (PersonEnum) personData.get("type");
     }
-    
+        
     public String getPhoneNumber() {
         return (String) personData.get("phonenum");
+    }
+    
+    public String getEmail() {
+        return (String) personData.get("email");
     }
     
     /**
@@ -136,10 +140,12 @@ public class Person {
      */
     @Override
     public String toString() {
-        return (getFullName() + " (" + getType() + ") - " + getIDNumber() + " - " + getPhoneNumber());
+        return ("Full Name: " + getFullName() + " (" + getType() + ")\r\n" + 
+                "ID#: " + getIDNumber() + " - Social Security: *" + getSocial().substring(5) + "\r\n" + 
+                "Phone Number: " + getPhoneNumber() + " - Email Address: " + getEmail());
     }
     
-    public void setSpecificData(String key, Object value) {
+    public void setPersonData(String key, Object value) {
         personData.put(key, value);
     }
     
@@ -147,5 +153,16 @@ public class Person {
         if (personData.containsKey(key))
             return personData.get(key);
         else throw new NoSuchElementException((String)personData.get("idnum") + " has no data for " + key);
+    }
+    
+    public String personWriter() {
+        Set<String> set = personData.keySet();
+        String writer = "";
+        
+        for (String key : set) {
+            writer += key + ":" + (personData.get(key)).toString() + ",";
+        }
+        writer = writer.substring(0, writer.length()-1);
+        return writer;
     }
 }

@@ -22,6 +22,20 @@ public class Administrator extends Person {
     
     public Administrator(String cLine) {
         super(cLine, PersonEnum.ADMINISTRATOR);
+        setSeniority(super.randomGen.nextInt(34)+1);
+    }
+    
+    public void setSeniority(int years) {
+        super.personData.put("seniority", new Integer(years));
+    }
+    
+    public Integer getSeniority() {
+        return ((Integer) super.personData.get("seniority"));
+    }
+    
+    @Override
+    public String toString() {
+        return (super.toString() + "\r\n" + "Seniority: " + getSeniority() + " years" + "\r\n\r\n");
     }
     
 }

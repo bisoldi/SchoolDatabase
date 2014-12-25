@@ -22,6 +22,29 @@ public class Faculty extends Person {
     
     public Faculty(String cLine){
         super(cLine, PersonEnum.FACULTY);
+        switch (super.randomGen.nextInt(2)) {
+            case 0: setTenured();
+                    break;
+            case 1: super.personData.put("tenured", new Boolean(false));
+                    break;
+        }
     }
+    
+    public void setTenured() {
+        super.personData.put("tenured", new Boolean(true));
+    }
+    
+    public Boolean getTenured() {
+        return (Boolean) super.personData.get("tenured");
+    }
+    
+    @Override
+    public String toString() {
+        String tenured;
+        if (getTenured())
+            tenured = "Y";
+        else tenured = "N";
+        return (super.toString() + "\r\n" + "Tenured: " + tenured + "\r\n\r\n");
+    }    
     
 }

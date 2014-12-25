@@ -8,8 +8,10 @@ package com.mycompany.schooldatabase;
 
 import java.io.*;
 import java.util.Scanner;
-import java.util.*;
-import com.google.common.base.Joiner;
+import java.nio.file.*;
+import java.nio.charset.*;
+
+
 
 /**
  *
@@ -22,11 +24,9 @@ public class FileOperations {
         
     public PersonCollection readOneTimeFile() {
     
-        PersonCollection collect = new PersonCollection();
-        Scanner scan = null;
+        PersonCollection collection = new PersonCollection();
         
-        try {
-            scan = new Scanner(new BufferedReader(new FileReader("names.txt")));
+        try (Scanner scan = new Scanner(new BufferedReader(new FileReader("names.txt")))) {
             
             while (scan.hasNextLine()) {
 //                String firstName = scan.next();
@@ -34,19 +34,31 @@ public class FileOperations {
 //                String social = scan.next();
 //                collect.addRandomPerson(firstName, lastName, social);
                 
-                collect.addRandomPerson(scan.nextLine());
+                collection.addRandomPerson(scan.nextLine());
             }
         } catch (FileNotFoundException fnfe) {
-            System.out.println("FileNotFoundException"); 
-        } finally {
-            if (scan != null) {
-                scan.close();
-            }
-        }
-        return collect;
+            System.out.println("I caught a FileNotFoundException"); 
+        } 
+        
+        return collection;
     }
     
-//    public boolean writeFile(PersonCollection coll) {
-//        
-//    }
+    public boolean writeFile(PersonCollection collection) throws IOException {
+        Path path = Paths.get("personFile.txt");
+        PersonCollectionIterator iter = collection.iterator();
+        
+        System.out.println("About to write file");
+               
+        try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
+            while (iter.hasNext()) {
+                writer.write(iter.next().personWriter());
+                if (iter.hasNext())
+                    writer.newLine();
+            }
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("I caught a FileNotFoundException");
+        }
+        
+        return true;
+    }
 }

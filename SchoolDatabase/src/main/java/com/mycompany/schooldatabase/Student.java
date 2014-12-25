@@ -24,5 +24,28 @@ public class Student extends Person {
 
     public Student (String cLine) {
         super(cLine, PersonEnum.STUDENT);
+        setGPA(createGPA());
+    }
+    
+    public Double createGPA() {
+        return ((double)Math.round(((super.randomGen.nextDouble() * 2.5 + 1.5))*100)/100);
     }    
+    
+    public void setGPA(String gpa) {
+        //Should probably ensure the GPA is maximum 2 decimal places here
+        super.personData.put("gpa", new Double(gpa));
+    }
+    
+    public void setGPA(double gpa) {
+        super.personData.put("gpa", new Double(gpa));
+    }
+    
+    public Double getGPA () {
+        return (Double) super.personData.get("gpa");
+    }
+        
+    @Override
+    public String toString() {
+        return (super.toString() + "\r\n" + "GPA: " + getGPA() + "\r\n\r\n");
+    }
 }
