@@ -11,6 +11,8 @@ package com.mycompany.schooldatabase;
 
 
 import java.util.*;
+import com.google.common.base.Splitter;
+
 
 /**
  * 
@@ -19,62 +21,116 @@ import java.util.*;
 public enum PersonEnum {
     STUDENT ("Student", "S", 7) {
         
+//        @Override
+//        public Person createPerson(String firstName, String lastName, String social) { 
+//            return new Student(firstName, lastName, social);
+//        }
+        
         @Override
-        public Person createPerson(String firstName, String lastName, String social) { 
-            return new Student(firstName, lastName, social);
+        public Person createPerson(String cLine) {             
+            return new Student(cLine);
         }
         
         @Override
-        public Person createPerson(String cLine) { 
-            return new Student(cLine);
-        }        
+        public ArrayList<String> getInputs() {
+            return Student.dataPoints;
+        }
+        
+        @Override
+        public ArrayList<String> getInputIdentifiers() {
+            return Student.dataPointIdentifiers;
+        }
     },
     
     FACULTY ("Faculty", "F", 7) {
         
-        @Override
-        public Person createPerson(String firstName, String lastName, String social) {
-            return new Faculty(firstName, lastName, social);
-        }
+//        @Override
+//        public Person createPerson(String firstName, String lastName, String social) {
+//            return new Faculty(firstName, lastName, social);
+//        }
         
         @Override
         public Person createPerson(String cLine) {
-            return new Faculty(cLine);
-        }        
+            StringBuilder str = new StringBuilder(cLine);
+            List<String> list = Splitter.on(":").splitToList(str.substring(str.indexOf("tenured:"), str.indexOf(",", str.indexOf("tenured:"))));
+            if (list.get(1).equalsIgnoreCase("Y")) {
+                str.delete(str.indexOf("tenured:"), str.indexOf(",", str.indexOf("tenured:"))+1);
+                str.append("tenured:true,");
+            }
+            else if (list.get(1).equalsIgnoreCase("N")) {
+                str.delete(str.indexOf("tenured:"), str.indexOf(",", str.indexOf("tenured:")+1));                
+                str.append("tenured:false,");
+            }
+            return new Faculty(str.toString());
+        }
+        
+        @Override
+        public ArrayList<String> getInputs() {
+            return Faculty.dataPoints;
+        }
+        
+        @Override
+        public ArrayList<String> getInputIdentifiers() {
+            return Faculty.dataPointIdentifiers;
+        }
     },
     
     ADMINISTRATOR ("Administrator", "A", 7) {
         
-        @Override
-        public Person createPerson(String firstName, String lastName, String social) {
-            return new Administrator(firstName, lastName, social);
-        }
+//        @Override
+//        public Person createPerson(String firstName, String lastName, String social) {
+//            return new Administrator(firstName, lastName, social);
+//        }
         
         @Override
         public Person createPerson(String cLine) {
             return new Administrator(cLine);
         }
+        
+        @Override
+        public ArrayList<String> getInputs() {
+            return Administrator.dataPoints;
+        }
+        
+        @Override
+        public ArrayList<String> getInputIdentifiers() {
+            return Administrator.dataPointIdentifiers;
+        }
+        
     },
     
     STAFF ("Staff", "ST", 7) {
         
-        @Override
-        public Person createPerson(String firstName, String lastName, String social) {
-            return new Staff(firstName, lastName, social);
-        }
+//        @Override
+//        public Person createPerson(String firstName, String lastName, String social) {
+//            return new Staff(firstName, lastName, social);
+//        }
         
         @Override
         public Person createPerson(String cLine) {
             return new Staff(cLine);
-        }        
+        }
+        
+        @Override
+        public ArrayList<String> getInputs() {
+            return Staff.dataPoints;
+        }
+        
+        @Override
+        public ArrayList<String> getInputIdentifiers() {
+            return Staff.dataPointIdentifiers;
+        }
+        
     };
     
     private final String descr;
     private final String prefix;
     private final int idLength;
     
-    public abstract Person createPerson(String firstName, String lastName, String social);
+//    public abstract Person createPerson(String firstName, String lastName, String social);
     public abstract Person createPerson(String cLine);
+    public abstract ArrayList<String> getInputs();
+    public abstract ArrayList<String> getInputIdentifiers();
     
     /**
      * Sets the description, prefix and idLength fields
@@ -97,13 +153,42 @@ public enum PersonEnum {
         return prefix;
     }
     
-    /**
-     * Returns a randomly selected Person.  Must be called on a Person type.
-     * @return A randomly selected Person enum value
-     */
-    public PersonEnum getRandomType() {
-        Random ran = new Random();
-        return this.values()[ran.nextInt(this.values().length)];
+//    /**
+//     * Returns a randomly selected Person.  Must be called on a Person type.
+//     * @return A randomly selected Person enum value
+//     */
+//    public static PersonEnum getRandomType() {
+//        Random ran = new Random();
+//        return values()[ran.nextInt(values().length)];
+//    }
+    
+    public static Person getNewPerson(String cLine) {
+        
+        int start = cLine.indexOf("type:");
+        int end = cLine.indexOf(",", start);
+        
+        String typeStr = cLine.substring(start + 5, end);
+        cLine = new StringBuilder(cLine).delete(start, end+1).toString();
+        PersonEnum type = null;
+        
+        switch (typeStr) {
+            case "Student":     type = STUDENT;
+                                break;
+                
+            case "Faculty":     type = FACULTY;
+                                break;
+                
+            case "Administrator":   type = ADMINISTRATOR;
+                                    break;
+
+            case "Staff":       type = STAFF;
+                                break;
+        }
+        if (type == null) {
+            throw new NullPointerException("Trying to create an unknown type of person");
+        }
+        return type.createPerson(cLine);
+        //Should do some checking here to make sure we're not dereferencing a null pointer
     }
     
     /**

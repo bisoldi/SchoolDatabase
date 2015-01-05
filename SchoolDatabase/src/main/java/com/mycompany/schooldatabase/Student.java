@@ -16,32 +16,31 @@ import java.util.*;
 public class Student extends Person {
 
     //Need itinerary array
-    private HashMap<String, Object> personData;
     
-    public Student (String firstName, String lastName, String social) {
-        super(firstName, lastName, social, PersonEnum.STUDENT);
-    }
+    protected static final ArrayList<String> dataPoints = new ArrayList<String>(Arrays.asList("First Name", "Last Name", "Social Security Number", "Phone Number", "GPA"));
+    protected static final ArrayList<String> dataPointIdentifiers = new ArrayList<String>(Arrays.asList("firstname", "lastname", "social", "phonenum", "gpa"));
+
+//    public Student (String firstName, String lastName, String social) {
+//        super(firstName, lastName, social, PersonEnum.STUDENT);
+//    }
 
     public Student (String cLine) {
         super(cLine, PersonEnum.STUDENT);
-        setGPA(createGPA());
+        if (!super.personData.containsKey("gpa"))
+            setGPA(0.0);
     }
-    
-    public Double createGPA() {
-        return ((double)Math.round(((super.randomGen.nextDouble() * 2.5 + 1.5))*100)/100);
-    }    
     
     public void setGPA(String gpa) {
         //Should probably ensure the GPA is maximum 2 decimal places here
-        super.personData.put("gpa", new Double(gpa));
+        super.personData.put("gpa", gpa);
     }
     
     public void setGPA(double gpa) {
-        super.personData.put("gpa", new Double(gpa));
+        super.personData.put("gpa", Double.toString(gpa));
     }
     
     public Double getGPA () {
-        return (Double) super.personData.get("gpa");
+        return new Double((String) super.personData.get("gpa"));
     }
         
     @Override

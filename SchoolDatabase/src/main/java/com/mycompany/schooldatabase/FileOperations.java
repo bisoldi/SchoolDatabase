@@ -22,23 +22,16 @@ public class FileOperations {
     public FileOperations() {
     }
         
-    public PersonCollection readOneTimeFile() {
-    
+    public PersonCollection readFile() throws IOException {
         PersonCollection collection = new PersonCollection();
+        Path path = Paths.get("personFile.txt");
         
-        try (Scanner scan = new Scanner(new BufferedReader(new FileReader("names.txt")))) {
-            
-            while (scan.hasNextLine()) {
-//                String firstName = scan.next();
-//                String lastName = scan.next();
-//                String social = scan.next();
-//                collect.addRandomPerson(firstName, lastName, social);
-                
-                collection.addRandomPerson(scan.nextLine());
+        try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
+            String cLine = null;
+            while ((cLine = reader.readLine()) != null) {
+                collection.addPerson(cLine);
             }
-        } catch (FileNotFoundException fnfe) {
-            System.out.println("I caught a FileNotFoundException"); 
-        } 
+        }
         
         return collection;
     }
@@ -46,9 +39,7 @@ public class FileOperations {
     public boolean writeFile(PersonCollection collection) throws IOException {
         Path path = Paths.get("personFile.txt");
         PersonCollectionIterator iter = collection.iterator();
-        
-        System.out.println("About to write file");
-               
+                       
         try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
             while (iter.hasNext()) {
                 writer.write(iter.next().personWriter());

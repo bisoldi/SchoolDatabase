@@ -14,23 +14,24 @@ import java.util.*;
  */
 public class Administrator extends Person {
     
-    private HashMap<String, Object> personData;
+    protected static final ArrayList<String> dataPoints = new ArrayList<String>(Arrays.asList("First Name", "Last Name", "Social Security Number", "Phone Number"));    
+    protected static final ArrayList<String> dataPointIdentifiers = new ArrayList<String>(Arrays.asList("firstname", "lastname", "social", "phonenum"));        
     
-    public Administrator(String firstName, String lastName, String social) {
-        super(firstName, lastName, social, PersonEnum.ADMINISTRATOR);
-    }
+//    public Administrator(String firstName, String lastName, String social) {
+//        super(firstName, lastName, social, PersonEnum.ADMINISTRATOR);
+//    }
     
     public Administrator(String cLine) {
         super(cLine, PersonEnum.ADMINISTRATOR);
-        setSeniority(super.randomGen.nextInt(34)+1);
+        setSeniority(0);
     }
     
     public void setSeniority(int years) {
-        super.personData.put("seniority", new Integer(years));
+        super.personData.put("seniority", Integer.toString(years));
     }
     
     public Integer getSeniority() {
-        return ((Integer) super.personData.get("seniority"));
+        return new Integer((String) super.personData.get("seniority"));
     }
     
     @Override

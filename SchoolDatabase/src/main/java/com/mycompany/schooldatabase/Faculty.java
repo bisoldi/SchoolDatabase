@@ -14,28 +14,23 @@ import java.util.*;
  */
 public class Faculty extends Person {
     
-    private HashMap<String, Object> personData;
+    protected static final ArrayList<String> dataPoints = new ArrayList<String>(Arrays.asList("First Name", "Last Name", "Social Security Number", "Phone Number", "Tenured (Y/N)"));    
+    protected static final ArrayList<String> dataPointIdentifiers = new ArrayList<String>(Arrays.asList("firstname", "lastname", "social", "phonenum", "tenured"));
     
-    public Faculty(String firstName, String lastName, String social){
-        super(firstName, lastName, social, PersonEnum.FACULTY);
-    }
+//    public Faculty(String firstName, String lastName, String social){
+//        super(firstName, lastName, social, PersonEnum.FACULTY);
+//    }
     
     public Faculty(String cLine){
         super(cLine, PersonEnum.FACULTY);
-        switch (super.randomGen.nextInt(2)) {
-            case 0: setTenured();
-                    break;
-            case 1: super.personData.put("tenured", new Boolean(false));
-                    break;
-        }
     }
     
     public void setTenured() {
-        super.personData.put("tenured", new Boolean(true));
+        super.personData.put("tenured", "true");
     }
     
     public Boolean getTenured() {
-        return (Boolean) super.personData.get("tenured");
+        return new Boolean ((String) super.personData.get("tenured"));
     }
     
     @Override

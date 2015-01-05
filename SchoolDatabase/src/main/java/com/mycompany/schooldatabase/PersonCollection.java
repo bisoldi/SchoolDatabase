@@ -9,7 +9,6 @@ package com.mycompany.schooldatabase;
 import java.util.*;
 import java.lang.*;
 
-
 /**
  * Manages the collections of Person class and all subclasses.
  * Maintains two HashMaps, to lookup a person by last name as well as ID#
@@ -18,7 +17,7 @@ import java.lang.*;
 public class PersonCollection implements Iterable<Person> {
     
     private final HashMap<String, Person> hmapID;
-    private final HashMap<String, Person> hmapName;
+    private final HashMap<String, Person> hmapName; //this needs to be a Guava MultiMap or something because of the potential for duplicate keys
     private final LinkedList<Person> list;
     
     /**
@@ -30,20 +29,23 @@ public class PersonCollection implements Iterable<Person> {
         list = new LinkedList<>();
         
     }
-    
+
     /**
-     * Creates a randomly selected Person using the information provided and adds it to the collection
-     * @param firstName 
-     * @param lastName
-     * @param social 
+     * Creates a new Person based on the String containing the Person information.
+     * Important to note, this method is only used when instantiating a Person class for an existing Person.  The type
+     * of person should be contained within the String parameter.
+     * @param cLine the String containing the Person information
      */
-    public void addRandomPerson(String firstName, String lastName, String social) {
-        PersonEnum type = PersonEnum.ADMINISTRATOR.getRandomType(); //this looks dumb and I expect to get called out on it
-        addPerson(type.createPerson(firstName, lastName, social));
+    public void addPerson(String cLine) {
+        addPerson(PersonEnum.getNewPerson(cLine));        
     }
     
-    public void addRandomPerson(String cLine) {
-        PersonEnum type = PersonEnum.ADMINISTRATOR.getRandomType();  //this looks dumb and I expect to get called out on it
+    /**
+     * Creates a new Person based on the String containing the Person information and the PersonEnum enum which dictates the type of Person to instantiate.
+     * @param cLine the String containing the Person information
+     * @param type  the type of Person to create
+     */
+    public void addPerson(String cLine, PersonEnum type) {
         addPerson(type.createPerson(cLine));
     }
     
@@ -75,4 +77,7 @@ public class PersonCollection implements Iterable<Person> {
         return new PersonCollectionIterator(hmapID, hmapName, list);
     }
 
+//    public static String verifyEmail(String first, String last) {
+//        
+//    }
 }
